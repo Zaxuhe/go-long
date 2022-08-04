@@ -1,28 +1,23 @@
 version: 1.0
 provider:
   name: openfaas
-  gateway: http://127.0.0.1:8080
+
 functions:
   go-long:
     lang: golang-middleware
     handler: ./go-long
-    image: alexellis2/go-long:0.3.0
+    image: ghcr.io/${OWNER:-openfaas}/go-long:${TAG:-latest}
     environment:
       write_timeout: 2m30s
       read_timeout: 2m
       exec_timeout: 2m
       handler_wait_duration: 1m30s
       healthcheck_interval: 5s
-    annotations:
-      topic: "pipeline.subscription"
-    labels:
-      com.openfaas.scale.min: 1
-      com.openfaas.scale.max: 1
 
   node12-sleep:
     lang: node12
     handler: ./node12-sleep
-    image: alexellis2/node12-sleep:0.1.0
+    image: ghcr.io/${OWNER:-openfaas}/node12-long:${TAG:-latest}
     environment:
       write_timeout: 3m
       read_timeout: 3m
